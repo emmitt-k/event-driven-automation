@@ -144,3 +144,59 @@ Since we use Terraform for infrastructure, we rely on the following strategies f
 3.  **Hybrid Testing**:
     -   Run Python scripts locally that invoke your Lambda handler functions.
     -   Connect to *real* AWS development resources (e.g., a dev Bedrock endpoint) by setting AWS credentials in your environment.
+
+## Quick Start
+
+### Prerequisites
+- AWS CLI configured with appropriate credentials
+- Terraform installed
+- Python 3.9+ with pip
+- Docker (for LocalStack testing)
+
+### Deployment
+
+The project uses a simplified 3-command deployment system:
+
+```bash
+# 1. Deploy infrastructure (first time setup)
+./deploy.sh infra dev
+
+# 2. Update Lambda code (after making changes)
+./deploy.sh code dev
+
+# 3. Run tests locally
+./deploy.sh test
+```
+
+#### Environments
+- `dev` - Development environment (default)
+- `staging` - Staging environment for testing
+- `production` - Production environment
+
+#### Examples
+```bash
+# Deploy to staging
+./deploy.sh infra staging
+
+# Update code in production
+./deploy.sh code production
+
+# Run local tests
+./deploy.sh test
+```
+
+### Development Workflow
+
+1. **Setup**: Deploy infrastructure once with `./deploy.sh infra dev`
+2. **Develop**: Make changes to Lambda code in `src/`
+3. **Test**: Run tests with `./deploy.sh test`
+4. **Deploy**: Update code with `./deploy.sh code dev`
+5. **Repeat**: Continue development cycle
+
+### Legacy Commands
+
+The old Makefile commands are still available but deprecated:
+- `make test` - Run unit tests
+- `make clean` - Clean build artifacts
+
+For new development, prefer the `./deploy.sh` commands above.
